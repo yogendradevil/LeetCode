@@ -7,6 +7,9 @@ class Solution {
             }
             int temp = nums[i]+i;
             reach = Math.max(reach, temp);
+            if(reach == nums.length){
+                return true;
+            }
         }   
         return true;
     }
