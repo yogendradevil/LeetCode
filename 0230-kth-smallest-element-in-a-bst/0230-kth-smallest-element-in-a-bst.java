@@ -22,9 +22,9 @@ class Solution {
         }
         kthSmallest(root.left, k);
         count++;
-        System.out.println(count);
         if(count == k){
             res = root.val;
+            return res;
         }
         kthSmallest(root.right, k);
         return res;
