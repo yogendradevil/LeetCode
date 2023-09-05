@@ -1,33 +1,23 @@
 class Solution {
     public int minPathSum(int[][] grid) {
         int[][] dp = new int[grid.length][grid[0].length];
-        for (int[] row : dp)
-            Arrays.fill(row, -1);
-        int sum = path(grid, dp, 0, 0);
-        return sum;
+        for(int[] temp : dp){
+            Arrays.fill(temp, -1);
+        }
+        return helper(grid, grid.length-1, grid[0].length-1, dp);
     }
-    static int path(int[][] arr, int[][] dp, int i, int j){
-        if(i == arr.length-1 && j == arr[0].length-1){
+    int helper(int[][] arr, int i, int j, int[][] dp){
+        if(i < 0 || j < 0){
+            return 9999999;
+        }
+        if(i == 0 && j == 0){
             return arr[i][j];
         }
-        if(i >= arr.length || j >= arr[0].length){
-            return Integer.MAX_VALUE;
+        if(dp[i][j] != -1){
+            return dp[i][j];
         }
-        int sum = arr[i][j];
-        int tempa = 0;
-        int tempb = 0;
-        if(i < arr.length-1 && j < arr[0].length-1 && dp[i][j+1] != -1){
-            tempa = dp[i][j+1];
-        }else{
-            tempa = path(arr, dp, i, j+1);
-        }
-        if(i < dp.length-1 && j < dp[0].length-1 && dp[i+1][j] != -1){
-            tempb = dp[i+1][j];
-        }else{
-            tempb = path(arr, dp, i+1, j);
-        }
-        sum += Math.min(tempa, tempb);
-        dp[i][j] = sum;
-        return sum;
+        int up = arr[i][j]+helper(arr, i-1, j, dp);
+        int left = arr[i][j]+helper(arr, i, j-1, dp);
+        return dp[i][j] = Math.min(up, left);
     }
 }
